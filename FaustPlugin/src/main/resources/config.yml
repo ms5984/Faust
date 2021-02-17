@@ -1,0 +1,5 @@
+enabled: true
+
+ticket-price: 1000
+
+limit-per-clan: 10

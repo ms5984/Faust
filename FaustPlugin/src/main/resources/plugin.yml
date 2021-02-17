@@ -1,0 +1,7 @@
+name: Faust
+version: ${project.version}
+main: com.github.ms5984.clans.lotto.Faust
+api-version: 1.16
+depend: [ ClansPro ]
+authors: [ ms5984 ]
+description: ${project.description}
