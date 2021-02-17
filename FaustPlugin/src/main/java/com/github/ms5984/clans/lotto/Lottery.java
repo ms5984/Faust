@@ -22,6 +22,7 @@ import com.github.ms5984.clans.lotto.api.model.Ticket;
 import com.youtube.hempfest.clans.construct.api.ClansAPI;
 import lombok.Getter;
 import lombok.val;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -37,7 +38,8 @@ public final class Lottery implements Serializable {
     protected final Set<Ticket> tickets = new HashSet<>();
     @Getter
     protected final Map<Ticket, Location> locations = new HashMap<>();
-    private final World world;
+    private transient World world;
+    private final UUID worldUuid;
 
     /**
      * Start a lottery in a given world.
@@ -45,6 +47,7 @@ public final class Lottery implements Serializable {
      */
     public Lottery(World world) {
         this.world = world;
+        this.worldUuid = world.getUID();
 /*        tickets.add(firstTicket);
         val player = firstTicket.getPlayer();
         if (player == null) {
@@ -58,7 +61,12 @@ public final class Lottery implements Serializable {
         }*/
     }
 
+    private void initializeWorld() {
+        if (world == null) world = Bukkit.getWorld(worldUuid);
+    }
+
     public void addTicket(Ticket ticket) {
+        initializeWorld();
         tickets.add(ticket);
         locations.computeIfAbsent(ticket, t -> {
             if (t.getPlayer() != null) {
@@ -75,6 +83,7 @@ public final class Lottery implements Serializable {
     }
 
     public void updateLocations() {
+        initializeWorld();
         tickets.forEach(ticket -> locations.computeIfPresent(ticket, (key, oldVal) -> {
             val player = ticket.getPlayer();
             if (player == null) return oldVal;

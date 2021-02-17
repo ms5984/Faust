@@ -20,12 +20,15 @@ package com.github.ms5984.clans.lotto.listeners;
 
 import com.github.ms5984.clans.lotto.Lottery;
 import com.github.ms5984.clans.lotto.api.events.LotteryEndEvent;
+import com.github.ms5984.clans.lotto.api.events.LotteryPreBeginEvent;
 import com.github.ms5984.clans.lotto.api.model.LottoResult;
 import com.github.ms5984.clans.lotto.api.model.Ticket;
 import com.github.ms5984.clans.lotto.cycles.FaustCycle;
 import lombok.val;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 import java.math.BigDecimal;
@@ -37,6 +40,11 @@ public class LotteryRunner implements Listener {
     private final Random random = new Random();
     private Lottery lottery;
 
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onLottoEndSuccess(LotteryEndEvent e) {
+        lottery = null;
+    }
+
     public Optional<LottoResult> endLotto() {
         if (lottery == null) return Optional.empty();
         val tickets = new ArrayList<>(lottery.getTickets());
@@ -45,16 +53,24 @@ public class LotteryRunner implements Listener {
         val lottoResult = new LottoResult(ticket.getClan(), lottery.getLocations().get(ticket), potValue);
         val event = new LotteryEndEvent();
         event.setLottoResult(lottoResult);
-        Bukkit.getServer().getPluginManager().callEvent(event);
+        Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return Optional.empty();
         return Optional.ofNullable(event.getLottoResult());
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onLottoPreBegin(LotteryPreBeginEvent e) {
+        if (lottery != null) {
+            return;
+        }
+        this.lottery = new Lottery(e.getWorld());
     }
 
     public void startLotto(World world) {
         if (lottery != null) {
             endLotto();
         }
-        this.lottery = new Lottery(world);
+        Bukkit.getPluginManager().callEvent(new LotteryPreBeginEvent(world));
     }
 
     public Optional<Lottery> getLottery() {

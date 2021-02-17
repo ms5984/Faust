@@ -18,36 +18,39 @@
  */
 package com.github.ms5984.clans.lotto.api.events;
 
-import com.github.ms5984.clans.lotto.api.model.Ticket;
 import com.youtube.hempfest.clans.construct.Clan;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigDecimal;
+
 /**
  * Called when a ticket is purchased.
  */
-public final class TicketBuyEvent extends Event {
+public final class TicketPreBuyEvent extends Event implements Cancellable {
     private static final HandlerList HANDLER_LIST = new HandlerList();
     private final Clan clan;
     private final Player buyer;
-    private final Ticket ticket;
+    private BigDecimal price;
+    private boolean cancelled;
 
     /**
-     * A ticket is purchased by a clan member.
+     * A ticket is being purchased by a clan member.
      * @param clan the buying clan
      * @param buyer the buying player
-     * @param ticket the ticket purchased
+     * @param price initial cost of the ticket
      */
-    public TicketBuyEvent(Clan clan, Player buyer, Ticket ticket) {
+    public TicketPreBuyEvent(Clan clan, Player buyer, BigDecimal price) {
         this.clan = clan;
         this.buyer = buyer;
-        this.ticket = ticket;
+        this.price = price;
     }
 
     /**
-     * Get the player that bought this ticket.
+     * Get the player that is buying a ticket.
      * <p>Typically, this is the clan leader.</p>
      * @return player
      */
@@ -56,7 +59,7 @@ public final class TicketBuyEvent extends Event {
     }
 
     /**
-     * Get the clan that bought this ticket.
+     * Get the clan that is buying this ticket.
      * @return clan
      */
     public Clan getBuyingClan() {
@@ -64,11 +67,29 @@ public final class TicketBuyEvent extends Event {
     }
 
     /**
-     * Get the Ticket object purchased.
-     * @return a new ticket
+     * Set the price of the ticket.
+     * @param price a new price
      */
-    public Ticket getTicket() {
-        return ticket;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    /**
+     * Get the price of the ticket.
+     * @return ticket price
+     */
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return cancelled;
+    }
+
+    @Override
+    public void setCancelled(boolean cancel) {
+        this.cancelled = cancel;
     }
 
     @Override
