@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Called when a lottery is requested to end.
  */
-public final class LotteryEndEvent extends Event implements Cancellable {
+public final class LotteryPreEndEvent extends Event implements Cancellable {
     private static final HandlerList HANDLER_LIST = new HandlerList();
     private LottoResult lottoResult;
     private boolean cancelled;

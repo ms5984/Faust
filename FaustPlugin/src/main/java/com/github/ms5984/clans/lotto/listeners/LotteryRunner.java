@@ -19,7 +19,7 @@
 package com.github.ms5984.clans.lotto.listeners;
 
 import com.github.ms5984.clans.lotto.Lottery;
-import com.github.ms5984.clans.lotto.api.events.LotteryEndEvent;
+import com.github.ms5984.clans.lotto.api.events.LotteryPreEndEvent;
 import com.github.ms5984.clans.lotto.api.events.LotteryPreBeginEvent;
 import com.github.ms5984.clans.lotto.api.model.LottoResult;
 import com.github.ms5984.clans.lotto.api.model.Ticket;
@@ -41,17 +41,17 @@ public class LotteryRunner implements Listener {
     private Lottery lottery;
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onLottoEndSuccess(LotteryEndEvent e) {
+    public void onLottoEndSuccess(LotteryPreEndEvent e) {
         lottery = null;
     }
 
     public Optional<LottoResult> endLotto() {
         if (lottery == null) return Optional.empty();
         val tickets = new ArrayList<>(lottery.getTickets());
-        final Ticket ticket = tickets.get(random.nextInt(tickets.size()));
+        val ticket = tickets.get(random.nextInt(tickets.size()));
         val potValue = tickets.stream().map(Ticket::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
         val lottoResult = new LottoResult(ticket.getClan(), lottery.getLocations().get(ticket), potValue);
-        val event = new LotteryEndEvent();
+        val event = new LotteryPreEndEvent();
         event.setLottoResult(lottoResult);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return Optional.empty();
