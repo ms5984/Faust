@@ -22,6 +22,9 @@ import com.github.ms5984.clans.lotto.listeners.LotteryCommand;
 import com.github.ms5984.clans.lotto.listeners.LotteryRunner;
 import com.github.sanctum.labyrinth.library.HUID;
 import com.youtube.hempfest.link.EventCycle;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.FieldDefaults;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,13 +36,17 @@ import java.util.HashSet;
 /**
  * Describes addon details and maintains state.
  */
+@EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public final class FaustCycle extends EventCycle {
 
     private static FaustCycle instance;
-    private final Plugin plugin = JavaPlugin.getProvidingPlugin(FaustCycle.class);
-    private final Collection<Listener> listeners = new HashSet<>();
-    private final HUID addonId = super.getAddonId();
-    private final LotteryRunner lotteryRunner;
+    Plugin plugin = JavaPlugin.getProvidingPlugin(FaustCycle.class);
+    Collection<Listener> listeners = new HashSet<>();
+    @EqualsAndHashCode.Include
+    HUID addonId = super.getAddonId();
+    @EqualsAndHashCode.Include
+    LotteryRunner lotteryRunner;
 
     public FaustCycle() {
         instance = this;

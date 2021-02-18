@@ -24,6 +24,9 @@ import com.github.ms5984.clans.lotto.api.events.LotteryPreBeginEvent;
 import com.github.ms5984.clans.lotto.api.model.LottoResult;
 import com.github.ms5984.clans.lotto.api.model.Ticket;
 import com.github.ms5984.clans.lotto.cycles.FaustCycle;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.FieldDefaults;
 import lombok.val;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -39,9 +42,11 @@ import java.util.Random;
 /**
  * Coordinates lottery events and maintains lottery state.
  */
-public class LotteryRunner implements Listener {
-    private final Random random = new Random();
-    private Lottery lottery;
+@EqualsAndHashCode
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public final class LotteryRunner implements Listener {
+    final Random random = new Random();
+    transient Lottery lottery;
 
     /**
      * Check for running lottery so we do not replace it if one is present.

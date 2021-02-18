@@ -20,7 +20,10 @@ package com.github.ms5984.clans.lotto;
 
 import com.github.ms5984.clans.lotto.api.model.Ticket;
 import com.youtube.hempfest.clans.construct.api.ClansAPI;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Value;
+import lombok.experimental.NonFinal;
 import lombok.val;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -32,14 +35,15 @@ import java.util.*;
 /**
  * Represents a running lottery.
  */
-public final class Lottery implements Serializable {
+@Value
+public class Lottery implements Serializable {
     private static final long serialVersionUID = -2264763922448603191L;
-    @Getter
-    protected final Set<Ticket> tickets = new HashSet<>();
-    @Getter
-    protected final Map<Ticket, Location> locations = new HashMap<>();
-    private transient World world;
-    private final UUID worldUuid;
+    Set<Ticket> tickets = new HashSet<>();
+    Map<Ticket, Location> locations = new HashMap<>();
+    @NonFinal @Getter(AccessLevel.NONE)
+    transient World world;
+    @Getter(AccessLevel.NONE)
+    UUID worldUuid;
 
     /**
      * Start a lottery in a given world.
@@ -48,17 +52,6 @@ public final class Lottery implements Serializable {
     public Lottery(World world) {
         this.world = world;
         this.worldUuid = world.getUID();
-/*        tickets.add(firstTicket);
-        val player = firstTicket.getPlayer();
-        if (player == null) {
-            val uid = firstTicket.getPlayerUid();
-            if (ClansAPI.getData().playerClan.containsKey(uid))
-                throw new IllegalArgumentException("The player is not online or a member of a clan!");
-            val baseLoc = ClansAPI.getInstance().getClan(uid).getBase();
-            this.world = baseLoc.getWorld();
-        } else {
-            this.world = player.getWorld();
-        }*/
     }
 
     private void initializeWorld() {
