@@ -14,7 +14,7 @@
     <packaging>pom</packaging>
 
     <name>Faust</name>
-    <description>A different kind of lottery...</description>
+    <description>A different type of lottery...</description>
     <url>https://github.com/ms5984/Faust</url>
 
     <properties>
@@ -113,13 +113,11 @@
         <dependency>
             <groupId>com.github.Hempfest</groupId>
             <artifactId>ClansAPI</artifactId>
-            <version>1.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>20.1.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
