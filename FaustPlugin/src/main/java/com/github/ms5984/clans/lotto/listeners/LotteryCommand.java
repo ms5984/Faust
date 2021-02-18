@@ -26,8 +26,16 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * Process player commands. TODO: investigate server commands
+ */
 public class LotteryCommand implements Listener {
     private final Plugin plugin = JavaPlugin.getProvidingPlugin(LotteryCommand.class);
+
+    /**
+     * Add suggests to clans' tab complete
+     * @param e TabInsertEvent
+     */
     @EventHandler
     public void onClanTab(TabInsertEvent e) {
         val commandArgs = e.getCommandArgs();
@@ -53,6 +61,10 @@ public class LotteryCommand implements Listener {
         }
     }
 
+    /**
+     * Process player commands.
+     * @param e CommandInsertEvent
+     */
     @EventHandler
     public void onClanCommand(CommandInsertEvent e) {
         val args = e.getArgs();

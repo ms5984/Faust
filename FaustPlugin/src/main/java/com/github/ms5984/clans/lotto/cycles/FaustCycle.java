@@ -25,10 +25,14 @@ import com.youtube.hempfest.link.EventCycle;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.HashSet;
 
+/**
+ * Describes addon details and maintains state.
+ */
 public final class FaustCycle extends EventCycle {
 
     private static FaustCycle instance;
@@ -84,7 +88,12 @@ public final class FaustCycle extends EventCycle {
         instance = null;
     }
 
-    public static LotteryRunner getLottery() {
+    /**
+     * Get an instance of the current lottery runner.
+     * @return runner, null if instance == null or runner == null
+     */
+    @Nullable
+    public static LotteryRunner getRunner() {
         if (instance == null) return null;
         return instance.lotteryRunner;
     }

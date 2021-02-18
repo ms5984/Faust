@@ -36,36 +36,76 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Random;
 
+/**
+ * Coordinates lottery events and maintains lottery state.
+ */
 public class LotteryRunner implements Listener {
     private final Random random = new Random();
     private Lottery lottery;
 
+    /**
+     * Check for running lottery so we do not replace it if one is present.
+     * <p>If a lottery is currently going on, cancel the event.</p>
+     * @param e LotteryPreBeginEvent
+     */
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onLottoPreBegin(LotteryPreBeginEvent e) {
+        if (lottery != null) {
+            e.setCancelled(true);
+        }
+    }
+
+    /**
+     * Start a new lottery.
+     * @param e LotteryPreBeginEvent
+     */
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onLottoPreBeginFinal(LotteryPreBeginEvent e) {
+        this.lottery = new Lottery(e.getWorld());
+    }
+
+    /**
+     * Process lottery results.
+     * @param e LotteryPreEndEvent
+     */
+    @EventHandler(ignoreCancelled = true)
+    public void onLottoPreEndProcess(LotteryPreEndEvent e) {
+        if (lottery == null) {
+            e.setCancelled(true);
+            return;
+        }
+        val tickets = new ArrayList<>(lottery.getTickets());
+        val ticket = tickets.get(random.nextInt(tickets.size()));
+        val potValue = tickets.stream().map(Ticket::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+        val lottoResult = new LottoResult(ticket.getClan(), lottery.getLocations().get(ticket), potValue);
+        e.setLottoResult(lottoResult);
+    }
+
+    /**
+     * Clean up the lottery variable after a successful lotto.
+     * @param e a LotteryPreEndEvent
+     */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onLottoEndSuccess(LotteryPreEndEvent e) {
         lottery = null;
     }
 
+    /**
+     * End a lottery.
+     * <p>This will return empty on event cancel and/or unset results.</p>
+     * @return an Optional that describes the lottery's results
+     */
     public Optional<LottoResult> endLotto() {
-        if (lottery == null) return Optional.empty();
-        val tickets = new ArrayList<>(lottery.getTickets());
-        val ticket = tickets.get(random.nextInt(tickets.size()));
-        val potValue = tickets.stream().map(Ticket::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
-        val lottoResult = new LottoResult(ticket.getClan(), lottery.getLocations().get(ticket), potValue);
         val event = new LotteryPreEndEvent();
-        event.setLottoResult(lottoResult);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return Optional.empty();
         return Optional.ofNullable(event.getLottoResult());
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onLottoPreBegin(LotteryPreBeginEvent e) {
-        if (lottery != null) {
-            return;
-        }
-        this.lottery = new Lottery(e.getWorld());
-    }
-
+    /**
+     * Start a lottery in a world.
+     * @param world world to hold lottery in
+     */
     public void startLotto(World world) {
         if (lottery != null) {
             endLotto();
@@ -73,12 +113,20 @@ public class LotteryRunner implements Listener {
         Bukkit.getPluginManager().callEvent(new LotteryPreBeginEvent(world));
     }
 
+    /**
+     * Get the lottery currently running.
+     * @return an Optional that describes the running lottery if one is present
+     */
     public Optional<Lottery> getLottery() {
         return Optional.ofNullable(lottery);
     }
 
+    /**
+     * Get the current runner.
+     * @return an Optional that describes the current runner if one is present
+     */
     public static Optional<LotteryRunner> getCurrentRunner() {
-        return Optional.ofNullable(FaustCycle.getLottery());
+        return Optional.ofNullable(FaustCycle.getRunner());
     }
 
 }

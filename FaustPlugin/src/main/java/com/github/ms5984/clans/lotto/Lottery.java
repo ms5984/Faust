@@ -65,6 +65,10 @@ public final class Lottery implements Serializable {
         if (world == null) world = Bukkit.getWorld(worldUuid);
     }
 
+    /**
+     * Add a ticket to the pot.
+     * @param ticket ticket to add
+     */
     public void addTicket(Ticket ticket) {
         initializeWorld();
         tickets.add(ticket);
@@ -82,6 +86,9 @@ public final class Lottery implements Serializable {
         });
     }
 
+    /**
+     * Update tickets' location data.
+     */
     public void updateLocations() {
         initializeWorld();
         tickets.forEach(ticket -> locations.computeIfPresent(ticket, (key, oldVal) -> {
