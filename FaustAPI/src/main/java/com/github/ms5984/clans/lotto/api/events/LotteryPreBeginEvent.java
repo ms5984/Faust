@@ -36,6 +36,7 @@ public final class LotteryPreBeginEvent extends Event implements Cancellable {
 
     /**
      * Begin a new lottery in World world.
+     *
      * @param world world
      * @throws NullPointerException if world is null
      */
@@ -45,6 +46,7 @@ public final class LotteryPreBeginEvent extends Event implements Cancellable {
 
     /**
      * Set the world where the lottery will begin.
+     *
      * @param world world to hold the lottery
      */
     public void setWorld(@NotNull World world) {
@@ -53,6 +55,7 @@ public final class LotteryPreBeginEvent extends Event implements Cancellable {
 
     /**
      * Get the world where the lottery will begin.
+     *
      * @return destination world for lottery
      */
     public World getWorld() {

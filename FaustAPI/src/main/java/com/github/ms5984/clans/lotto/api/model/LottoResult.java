@@ -32,7 +32,8 @@ public final class LottoResult {
     private final BigDecimal potValue;
 
     /**
-     * A lottery is ended with winner, location, and value
+     * A lottery is ended with winner, location, and value.
+     *
      * @param winner winning clan
      * @param location fuzzed location
      * @param potValue value of lottery prize
@@ -45,6 +46,7 @@ public final class LottoResult {
 
     /**
      * Get the winning clan.
+     *
      * @return the winning clan
      */
     public Clan getWinner() {
@@ -53,6 +55,7 @@ public final class LottoResult {
 
     /**
      * Get a fuzzed location.
+     *
      * @return fuzzed location
      */
     public Location getLocation() {
@@ -61,6 +64,7 @@ public final class LottoResult {
 
     /**
      * Get the value of the pot won.
+     *
      * @return prize value
      */
     public BigDecimal getPotValue() {

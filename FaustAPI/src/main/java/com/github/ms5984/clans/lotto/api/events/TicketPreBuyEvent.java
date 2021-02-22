@@ -39,6 +39,7 @@ public final class TicketPreBuyEvent extends Event implements Cancellable {
 
     /**
      * A ticket is being purchased by a clan member.
+     *
      * @param clan the buying clan
      * @param buyer the buying player
      * @param price initial cost of the ticket
@@ -51,7 +52,9 @@ public final class TicketPreBuyEvent extends Event implements Cancellable {
 
     /**
      * Get the player that is buying a ticket.
-     * <p>Typically, this is the clan leader.</p>
+     * <p>
+     * Typically, this is the clan leader.
+     *
      * @return player
      */
     public Player getBuyer() {
@@ -60,6 +63,7 @@ public final class TicketPreBuyEvent extends Event implements Cancellable {
 
     /**
      * Get the clan that is buying this ticket.
+     *
      * @return clan
      */
     public Clan getBuyingClan() {
@@ -68,6 +72,7 @@ public final class TicketPreBuyEvent extends Event implements Cancellable {
 
     /**
      * Set the price of the ticket.
+     *
      * @param price a new price
      */
     public void setPrice(BigDecimal price) {
@@ -76,6 +81,7 @@ public final class TicketPreBuyEvent extends Event implements Cancellable {
 
     /**
      * Get the price of the ticket.
+     *
      * @return ticket price
      */
     public BigDecimal getPrice() {

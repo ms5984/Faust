@@ -44,6 +44,7 @@ public final class Ticket implements Serializable {
 
     /**
      * A ticket is purchased by a player in a clan for a price.
+     *
      * @param clan clan of player
      * @param player buying player
      * @param price price paid
@@ -59,6 +60,7 @@ public final class Ticket implements Serializable {
 
     /**
      * Get the clan that purchased this ticket.
+     *
      * @return the clan
      */
     public Clan getClan() {
@@ -67,10 +69,12 @@ public final class Ticket implements Serializable {
 
     /**
      * Get the Player that purchased this ticket.
-     * <p>This method will attempt to resolve playerUid
+     * <p>
+     * This method will attempt to resolve playerUid
      * into a Player object. This won't be possible if the
      * player is not online after a plugin restart, in
-     * which case this method will return null.</p>
+     * which case this method will return null.
+     *
      * @return player reference if available or null
      */
     @Nullable
@@ -80,9 +84,11 @@ public final class Ticket implements Serializable {
 
     /**
      * Get a fallback OfflinePlayer reference from this ticket.
-     * <p>If {@link #getPlayer} is null, you can use this method to easily
-     * retrieve a backup OfflinePlayer. If {@link #getPlayer} is not null
-     * this method may return that Player object.</p>
+     * <p>
+     * If {@link #getPlayer} is null, you can use this method to easily
+     * retrieve a backup OfflinePlayer. If #getPlayer is not null
+     * this method may return that Player object.
+     *
      * @return player reference as OfflinePlayer
      */
     public OfflinePlayer getPlayerOffline() {
@@ -91,6 +97,7 @@ public final class Ticket implements Serializable {
 
     /**
      * Get the UniqueId of the player that purchased this ticket.
+     *
      * @return UUID of player's UniqueId
      */
     public UUID getPlayerUid() {
@@ -99,6 +106,7 @@ public final class Ticket implements Serializable {
 
     /**
      * Get the embedded ticket number.
+     *
      * @return HUID ticket number
      */
     public HUID getTicketNumber() {
@@ -107,6 +115,7 @@ public final class Ticket implements Serializable {
 
     /**
      * Get the price paid for this ticket.
+     *
      * @return price paid for the ticket
      */
     public BigDecimal getPrice() {

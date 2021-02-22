@@ -31,6 +31,7 @@ import java.util.Set;
 public interface FaustAPI {
     /**
      * Get the ticket price set in the config.
+     *
      * @return the configured ticket price as a BigDecimal
      * @throws NumberFormatException if 'ticket-price' does
      * not represent a BigDecimal
@@ -40,6 +41,7 @@ public interface FaustAPI {
 
     /**
      * Get the limit for tickets purchased per clan, per pot.
+     *
      * @return the maximum number of tickets one clan may
      * purchase per lottery. -1 equals unlimited
      */
@@ -47,12 +49,14 @@ public interface FaustAPI {
 
     /**
      * Get all tickets in the pot.
+     *
      * @return set of purchased tickets
      */
     Set<Ticket> getTicketsInPot();
 
     /**
      * End the current lotto and choose a winner immediately.
+     *
      * @return an Optional describing the result. If no lottery
      * is happening and/or the call is cancelled, this will
      * return an empty Optional.
@@ -61,13 +65,16 @@ public interface FaustAPI {
 
     /**
      * Start a new lottery in world world.
-     * <p>Ends any existing lottery.</p>
+     * <p>
+     * Ends any existing lottery.
+     *
      * @param world the calling world.
      */
     void startLotto(World world);
 
     /**
      * Retrieve the FaustAPI provider via Bukkit RSP.
+     *
      * @return instance of api
      */
     static FaustAPI getInstance() {

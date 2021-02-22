@@ -34,6 +34,7 @@ public final class LotteryPreEndEvent extends Event implements Cancellable {
 
     /**
      * Set the results of the draw.
+     *
      * @param lottoResult new results
      */
     public void setLottoResult(@NotNull LottoResult lottoResult) {
@@ -42,6 +43,7 @@ public final class LotteryPreEndEvent extends Event implements Cancellable {
 
     /**
      * Get the results of the draw.
+     *
      * @return lottery results
      */
     public LottoResult getLottoResult() {
