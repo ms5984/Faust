@@ -97,6 +97,7 @@ public final class FaustCycle extends EventCycle {
 
     /**
      * Get an instance of the current lottery runner.
+     *
      * @return runner, null if instance == null or runner == null
      */
     @Nullable

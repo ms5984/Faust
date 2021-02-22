@@ -33,7 +33,8 @@ public class LotteryCommand implements Listener {
     private final Plugin plugin = JavaPlugin.getProvidingPlugin(LotteryCommand.class);
 
     /**
-     * Add suggests to clans' tab complete
+     * Add suggests to Clans tab complete.
+     *
      * @param e TabInsertEvent
      */
     @EventHandler
@@ -63,6 +64,7 @@ public class LotteryCommand implements Listener {
 
     /**
      * Process player commands.
+     *
      * @param e CommandInsertEvent
      */
     @EventHandler

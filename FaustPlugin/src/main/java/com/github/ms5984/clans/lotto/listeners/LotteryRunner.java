@@ -50,7 +50,9 @@ public final class LotteryRunner implements Listener {
 
     /**
      * Check for running lottery so we do not replace it if one is present.
-     * <p>If a lottery is currently going on, cancel the event.</p>
+     * <p>
+     * If a lottery is currently going on, cancel the event.
+     *
      * @param e LotteryPreBeginEvent
      */
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -62,6 +64,7 @@ public final class LotteryRunner implements Listener {
 
     /**
      * Start a new lottery.
+     *
      * @param e LotteryPreBeginEvent
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -71,6 +74,7 @@ public final class LotteryRunner implements Listener {
 
     /**
      * Process lottery results.
+     *
      * @param e LotteryPreEndEvent
      */
     @EventHandler(ignoreCancelled = true)
@@ -88,6 +92,7 @@ public final class LotteryRunner implements Listener {
 
     /**
      * Clean up the lottery variable after a successful lotto.
+     *
      * @param e a LotteryPreEndEvent
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -97,7 +102,9 @@ public final class LotteryRunner implements Listener {
 
     /**
      * End a lottery.
-     * <p>This will return empty on event cancel and/or unset results.</p>
+     * <p>
+     * This will return empty on event cancel and/or unset results.
+     *
      * @return an Optional that describes the lottery's results
      */
     public Optional<LottoResult> endLotto() {
@@ -109,6 +116,7 @@ public final class LotteryRunner implements Listener {
 
     /**
      * Start a lottery in a world.
+     *
      * @param world world to hold lottery in
      */
     public void startLotto(World world) {
@@ -120,6 +128,7 @@ public final class LotteryRunner implements Listener {
 
     /**
      * Get the lottery currently running.
+     *
      * @return an Optional that describes the running lottery if one is present
      */
     public Optional<Lottery> getLottery() {
@@ -128,6 +137,7 @@ public final class LotteryRunner implements Listener {
 
     /**
      * Get the current runner.
+     *
      * @return an Optional that describes the current runner if one is present
      */
     public static Optional<LotteryRunner> getCurrentRunner() {

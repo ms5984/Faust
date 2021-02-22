@@ -47,6 +47,7 @@ public class Lottery implements Serializable {
 
     /**
      * Start a lottery in a given world.
+     *
      * @param world world to use
      */
     public Lottery(World world) {
@@ -60,6 +61,7 @@ public class Lottery implements Serializable {
 
     /**
      * Add a ticket to the pot.
+     *
      * @param ticket ticket to add
      */
     public void addTicket(Ticket ticket) {
